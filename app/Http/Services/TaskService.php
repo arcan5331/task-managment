@@ -12,6 +12,11 @@ class TaskService
         return Task::create($taskData);
     }
 
+    static public function deleteTask(Task $task)
+    {
+        $task->delete();
+    }
+
     static public function updateTask(Task $task, array $newData)
     {
         $task->update($newData);
