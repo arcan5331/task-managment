@@ -43,9 +43,9 @@ class Task extends Model
     protected function setSuperiority($type): int
     {
         return match ($type) {
-            TaskSuperiority::insignificant => 0,
-            TaskSuperiority::normal => 1,
-            TaskSuperiority::critical => 2,
+            TaskSuperiority::insignificant->name => 0,
+            TaskSuperiority::normal->name => 1,
+            TaskSuperiority::critical->name => 2,
             default => 1,
         };
     }
@@ -63,9 +63,9 @@ class Task extends Model
     protected function setType($type): int
     {
         return match ($type) {
-            TaskType::overDu => 0,
-            TaskType::onGoing => 1,
-            TaskType::completed => 2,
+            TaskType::overDu->name => 0,
+            TaskType::onGoing->name => 1,
+            TaskType::completed->name => 2,
             default => 1,
         };
     }
