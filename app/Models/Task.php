@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TaskType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\TaskSuperiority;
@@ -14,7 +15,8 @@ class Task extends Model
         'title',
         'description',
         'superiority',
-        'du_date'
+        'du_date',
+        'type',
     ];
 
     protected $casts = [
@@ -26,6 +28,14 @@ class Task extends Model
         return Attribute::make(
             get: fn($value) => $this->getSuperiority($value),
             set: fn($value) => $this->setSuperiority($value)
+        );
+    }
+
+    protected function type(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->getType($value),
+            set: fn($value) => $this->setType($value)
         );
     }
 
@@ -48,6 +58,27 @@ class Task extends Model
             default => TaskSuperiority::normal->name,
         };
     }
+
+    protected function setType($type): int
+    {
+        return match ($type) {
+            TaskType::overDu => 0,
+            TaskType::onGoing => 1,
+            TaskType::completed => 2,
+            default => 1,
+        };
+    }
+
+    protected function getType($value): string
+    {
+        return match ($value) {
+            0 => TaskType::overDu->name,
+            1 => TaskType::onGoing->name,
+            2 => TaskType::completed->name,
+            default => TaskType::onGoing->name,
+        };
+    }
+
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

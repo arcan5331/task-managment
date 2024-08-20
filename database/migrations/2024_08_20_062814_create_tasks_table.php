@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('description')->nullable();
             $table->date('du_date');
             $table->integer('superiority')->default(1);
+            $table->integer('type')->default(1);
             $table->foreignIdFor(\App\Models\User::class);
             $table->timestamps();
         });
