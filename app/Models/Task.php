@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Casts\JalaliDateCast;
-use App\Enums\TaskType;
+use App\Enums\TaskStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\TaskSuperiority;
@@ -17,7 +17,7 @@ class Task extends Model
         'description',
         'superiority',
         'du_date',
-        'type',
+        'status',
     ];
 
     protected $casts = [
@@ -32,11 +32,11 @@ class Task extends Model
         );
     }
 
-    protected function type(): Attribute
+    protected function status(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->getType($value),
-            set: fn($value) => $this->setType($value)
+            get: fn($value) => $this->getStatus($value),
+            set: fn($value) => $this->setStatus($value)
         );
     }
 
@@ -60,23 +60,23 @@ class Task extends Model
         };
     }
 
-    protected function setType($type): int
+    protected function setStatus($type): int
     {
         return match ($type) {
-            TaskType::overDu->value => 0,
-            TaskType::onGoing->value => 1,
-            TaskType::completed->value => 2,
+            TaskStatus::overDu->value => 0,
+            TaskStatus::onGoing->value => 1,
+            TaskStatus::completed->value => 2,
             default => 1,
         };
     }
 
-    protected function getType($value): string
+    protected function getStatus($value): string
     {
         return match ($value) {
-            0 => TaskType::overDu->value,
-            1 => TaskType::onGoing->value,
-            2 => TaskType::completed->value,
-            default => TaskType::onGoing->value,
+            0 => TaskStatus::overDu->value,
+            1 => TaskStatus::onGoing->value,
+            2 => TaskStatus::completed->value,
+            default => TaskStatus::onGoing->value,
         };
     }
 

@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Enums\TaskSuperiority;
-use App\Enums\TaskType;
+use App\Enums\TaskStatus;
 use App\Rules\JalaliDate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -18,7 +18,7 @@ class TaskCreateRequest extends FormRequest
             'du_date' => ['required', new JalaliDate()],
             'description' => ['nullable', 'min:2'],
             'superiority' => ['nullable', Rule::enum(TaskSuperiority::class)],
-            'type' => ['nullable', Rule::enum(TaskType::class)],
+            'status' => ['nullable', Rule::enum(TaskStatus::class)],
         ];
     }
 

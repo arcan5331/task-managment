@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum TaskType: string
+enum TaskStatus: string
 {
     case onGoing = 'on_going';
     case completed = "completed";
