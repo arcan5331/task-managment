@@ -16,7 +16,7 @@ class TaskController extends Controller
             return Task::all();
         }
         $this->authorize('viewSelf', Task::class);
-        return $request->user()->tasks();
+        return $request->user()->tasks;
     }
 
     public function store(TaskCreateRequest $request)
