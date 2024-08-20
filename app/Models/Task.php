@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\JalaliDateCast;
 use App\Enums\TaskType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -20,7 +21,7 @@ class Task extends Model
     ];
 
     protected $casts = [
-        'du_date' => 'date'
+        'du_date' => JalaliDateCast::class
     ];
 
     protected function superiority(): Attribute
@@ -79,6 +80,12 @@ class Task extends Model
         };
     }
 
+    public function complete(): bool
+    {
+        return $this->update([
+            'type' => 'completed'
+        ]);
+    }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
