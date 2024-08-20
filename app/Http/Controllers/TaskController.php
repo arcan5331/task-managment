@@ -12,7 +12,7 @@ class TaskController extends Controller
         if ($request->user()->isAdmin()) {
             return Task::all();
         }
-        $this->authorize('viewSelf');
+        $this->authorize('viewSelf', Task::class);
         return $request->user()->tasks();
     }
 
