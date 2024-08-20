@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TaskCreateRequest;
+use App\Http\Services\TaskService;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -16,8 +18,14 @@ class TaskController extends Controller
         return $request->user()->tasks();
     }
 
-    public function store(Request $request)
+    public function store(TaskCreateRequest $request)
     {
+        if (!((int)$request->input('user_id') === auth()->id())) {
+            $this->authorize('createForAllUsers', Task::class);
+        } else {
+            $this->authorize('createForSelf', Task::class);
+        }
+        return TaskService::createTask($request->validated());
 
     }
 
