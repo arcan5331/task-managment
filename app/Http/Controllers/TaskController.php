@@ -50,5 +50,10 @@ class TaskController extends Controller
         return response()->noContent();
     }
 
+    public function toggleTaskStatus(Task $task)
+    {
+        $this->authorize('toggleTaskStatus', $task);
+        TaskService::toggleTaskStatus($task);
+        return $task->refresh();
     }
 }

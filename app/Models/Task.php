@@ -87,6 +87,15 @@ class Task extends Model
         ]);
     }
 
+    public function toggleCompletionStatus(): bool
+    {
+        return $this->update([
+            'status' => $this->status === TaskStatus::completed->value
+                ? TaskStatus::onGoing->value
+                : TaskStatus::completed->value
+        ]);
+    }
+
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);

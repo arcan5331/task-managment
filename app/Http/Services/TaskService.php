@@ -22,4 +22,9 @@ class TaskService
         $task->update($newData);
     }
 
+    static public function toggleTaskStatus(Task $task)
+    {
+        $task->toggleCompletionStatus();
+    }
+
 }

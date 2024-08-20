@@ -54,7 +54,7 @@ class TaskPolicy
      * Determine whether the user can complete the task.
      */
 
-    public function completeTask(User $user, Task $task): bool
+    public function toggleTaskStatus(User $user, Task $task): bool
     {
         return $user->isAdmin() or $task->user_id === $user->id;
     }
