@@ -26,7 +26,7 @@ class TaskController extends Controller
         } else {
             $this->authorize('createForSelf', Task::class);
         }
-        return TaskService::createTask($request->validated());
+        return TaskService::createTask($request->validated())->refresh();
 
     }
 
