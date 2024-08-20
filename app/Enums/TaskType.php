@@ -2,9 +2,9 @@
 
 namespace App\Enums;
 
-enum TaskType
+enum TaskType: string
 {
-    case onGoing;
-    case completed;
-    case overDu;
+    case onGoing = 'on_going';
+    case completed = "completed";
+    case overDu = 'over_du';
 }

@@ -43,9 +43,9 @@ class Task extends Model
     protected function setSuperiority($type): int
     {
         return match ($type) {
-            TaskSuperiority::insignificant->name => 0,
-            TaskSuperiority::normal->name => 1,
-            TaskSuperiority::critical->name => 2,
+            TaskSuperiority::insignificant->value => 0,
+            TaskSuperiority::normal->value => 1,
+            TaskSuperiority::critical->value => 2,
             default => 1,
         };
     }
@@ -53,19 +53,19 @@ class Task extends Model
     protected function getSuperiority($value): string
     {
         return match ($value) {
-            0 => TaskSuperiority::insignificant->name,
-            1 => TaskSuperiority::normal->name,
-            2 => TaskSuperiority::critical->name,
-            default => TaskSuperiority::normal->name,
+            0 => TaskSuperiority::insignificant->value,
+            1 => TaskSuperiority::normal->value,
+            2 => TaskSuperiority::critical->value,
+            default => TaskSuperiority::normal->value,
         };
     }
 
     protected function setType($type): int
     {
         return match ($type) {
-            TaskType::overDu->name => 0,
-            TaskType::onGoing->name => 1,
-            TaskType::completed->name => 2,
+            TaskType::overDu->value => 0,
+            TaskType::onGoing->value => 1,
+            TaskType::completed->value => 2,
             default => 1,
         };
     }
@@ -73,10 +73,10 @@ class Task extends Model
     protected function getType($value): string
     {
         return match ($value) {
-            0 => TaskType::overDu->name,
-            1 => TaskType::onGoing->name,
-            2 => TaskType::completed->name,
-            default => TaskType::onGoing->name,
+            0 => TaskType::overDu->value,
+            1 => TaskType::onGoing->value,
+            2 => TaskType::completed->value,
+            default => TaskType::onGoing->value,
         };
     }
 

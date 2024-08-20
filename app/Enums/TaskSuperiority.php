@@ -2,9 +2,9 @@
 
 namespace App\Enums;
 
-enum TaskSuperiority
+enum TaskSuperiority: string
 {
-    case critical;
-    case normal;
-    case insignificant;
+    case critical = "critical";
+    case normal = "normal";
+    case insignificant = "insignificant";
 }
