@@ -11,4 +11,10 @@ class TaskService
     {
         return Task::create($taskData);
     }
+
+    static public function updateTask(Task $task, array $newData)
+    {
+        $task->update($newData);
+    }
+
 }

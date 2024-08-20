@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskCreateRequest;
+use App\Http\Requests\TaskUpdateRequest;
 use App\Http\Services\TaskService;
 use App\Models\Task;
 use Illuminate\Http\Request;
@@ -35,9 +36,11 @@ class TaskController extends Controller
         return $task;
     }
 
-    public function update(Request $request, Task $task)
+    public function update(TaskUpdateRequest $request, Task $task)
     {
-
+        $this->authorize('update', $task);
+        TaskService::updateTask($task, $request->validated());
+        return $task->refresh();
     }
 
     public function destroy(Task $task)
