@@ -7,9 +7,13 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-
+        if ($request->user()->isAdmin()) {
+            return Task::all();
+        }
+        $this->authorize('viewSelf');
+        return $request->user()->tasks();
     }
 
     public function store(Request $request)
@@ -17,9 +21,10 @@ class TaskController extends Controller
 
     }
 
-    public function show(Request $request, Task $task)
+    public function show(Task $task)
     {
-
+        $this->authorize('view', $task);
+        return $task;
     }
 
     public function update(Request $request, Task $task)
