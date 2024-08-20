@@ -19,7 +19,10 @@ class JalaliDateCast implements CastsAttributes
      */
     public function get($model, string $key, $value, array $attributes): ?string
     {
-        return $value ? Jalalian::fromCarbon(Carbon::createFromFormat('Y-m-d', $value))->format('Y/m/d') : null;
+        if (!is_a($value, \Carbon\Carbon::class))
+            $value = Carbon::createFromFormat('Y-m-d', $value);
+        return $value ? Jalalian::fromCarbon($value)->format('Y/m/d') : null;
+
     }
 
     /**
