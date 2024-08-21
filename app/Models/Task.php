@@ -92,6 +92,11 @@ class Task extends Model
 
     public function toggleCompletionStatus(): bool
     {
+        if ($this->status === TaskStatus::overDu) {
+            return $this->update([
+                'status' => TaskStatus::completed->value
+            ]);
+        }
         return $this->update([
             'status' => $this->status === TaskStatus::completed->value
                 ? TaskStatus::onGoing->value
