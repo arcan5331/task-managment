@@ -9,7 +9,7 @@ class TaskObserver
 {
     public function created(Task $task): void
     {
-        event(new TaskCreatedEvent($task));
+        event(new TaskCreatedEvent($task->toArray()));
     }
 
     public function updated(Task $task): void

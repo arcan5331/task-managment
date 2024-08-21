@@ -10,7 +10,7 @@ class TaskCreatedEvent extends BaseTaskEvent
     {
         return [
             'type' => 'task_created',
-            'task' => $this->task
+            'task' => $this->taskData
         ];
     }
 }

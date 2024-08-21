@@ -16,11 +16,13 @@ class TaskEvent implements ShouldBroadcast
 
     public string $superiority;
     public int $taskId;
+    public array $taskData;
 
-    public function __construct(public Task $task)
+    public function __construct(array $taskData)
     {
-        $this->superiority = $task->superiority;
-        $this->taskId = $task->id;
+        $this->superiority = $taskData['superiority'];
+        $this->taskId = $taskData['id'];
+        $this->taskData = $taskData;
     }
 
     public function broadcastQueue(): string
@@ -35,7 +37,7 @@ class TaskEvent implements ShouldBroadcast
 
     public function broadcastOn(): PrivateChannel
     {
-        return new PrivateChannel('task.' . $this->task->id);
+        return new PrivateChannel('task.' . $this->taskId);
     }
 }
 
