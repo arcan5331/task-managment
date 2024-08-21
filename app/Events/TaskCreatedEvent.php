@@ -15,10 +15,12 @@ class TaskCreatedEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public string $superiority;
+    public int $taskId;
 
-    public function __construct(Task $task)
+    public function __construct(public Task $task)
     {
         $this->superiority = $task->superiority;
+        $this->taskId = $task->id;
     }
 
     public function broadcastQueue(): string
@@ -31,10 +33,8 @@ class TaskCreatedEvent implements ShouldBroadcast
         };
     }
 
-    public function broadcastOn(): array
+    public function broadcastOn(): PrivateChannel
     {
-        return [
-            new PrivateChannel('channel-name')
-        ];
+        return new PrivateChannel('task.' . $this->task->id);
     }
 }
