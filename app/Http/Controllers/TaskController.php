@@ -7,16 +7,22 @@ use App\Http\Requests\TaskUpdateRequest;
 use App\Http\Services\TaskService;
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TaskController extends Controller
 {
     public function index(Request $request)
     {
         if ($request->user()->isAdmin()) {
-            return Task::all();
+            $tasks = Task::all();
+        } else {
+            $this->authorize('viewSelf', Task::class);
+            $tasks = $request->user()->tasks;
         }
-        $this->authorize('viewSelf', Task::class);
-        return $request->user()->tasks;
+        Log::info('user with id {authId} viewed {taskCount} tasks',
+            ['authId' => auth()->id(), 'taskCount' => count($tasks)]);
+
+        return $tasks;
     }
 
     public function store(TaskCreateRequest $request)
@@ -33,6 +39,8 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         $this->authorize('view', $task);
+        Log::info('user with id {authId} viewed task with id {taskId}',
+            ['authId' => auth()->id(), 'taskId' => $task->id]);
         return $task;
     }
 
