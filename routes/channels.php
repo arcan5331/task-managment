@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -14,5 +16,19 @@ use Illuminate\Support\Facades\Broadcast;
 */
 
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+    return (int)$user->id === (int)$id;
+});
+
+Broadcast::channel('task.{taskId}', function (User $user, $taskId) {
+    $task = Task::find($taskId);
+
+    if ($task && (int)$user->id === (int)$task->user_id) {
+        return true;
+    }
+
+    if ($task && $user->isAdmin()) {
+        return true;
+    }
+
+    return false;
 });
