@@ -2,39 +2,15 @@
 
 namespace App\Events;
 
-use App\Enums\TaskSuperiority;
-use App\Models\Task;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Queue\SerializesModels;
+use App\Events\TaskEvent as BaseTaskEvent;
 
-class TaskCreatedEvent implements ShouldBroadcast
+class TaskCreatedEvent extends BaseTaskEvent
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public string $superiority;
-    public int $taskId;
-
-    public function __construct(public Task $task)
+    public function broadcastWith(): array
     {
-        $this->superiority = $task->superiority;
-        $this->taskId = $task->id;
-    }
-
-    public function broadcastQueue(): string
-    {
-        return match ($this->superiority) {
-            TaskSuperiority::critical->value => 'high',
-            TaskSuperiority::normal->value => 'medium',
-            TaskSuperiority::insignificant->value => 'low',
-            default => 'default'
-        };
-    }
-
-    public function broadcastOn(): PrivateChannel
-    {
-        return new PrivateChannel('task.' . $this->task->id);
+        return [
+            'type' => 'task_created',
+            'task' => $this->task
+        ];
     }
 }
