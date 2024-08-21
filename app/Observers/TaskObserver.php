@@ -9,7 +9,7 @@ class TaskObserver
 {
     public function created(Task $task): void
     {
-        dispatch(new TaskCreatedEvent($task));
+        event(new TaskCreatedEvent($task));
     }
 
     public function updated(Task $task): void
