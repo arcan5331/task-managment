@@ -19,16 +19,10 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int)$user->id === (int)$id;
 });
 
-Broadcast::channel('task.{taskId}', function (User $user, $taskId) {
-    $task = Task::find($taskId);
+Broadcast::channel('user.{userId}', function ($user, $userId) {
+    return (int)$user->id === (int)$userId;
+});
 
-    if ($task && (int)$user->id === (int)$task->user_id) {
-        return true;
-    }
-
-    if ($task && $user->isAdmin()) {
-        return true;
-    }
-
-    return false;
+Broadcast::channel('Admin', function ($user) {
+    return $user->isAdmin();
 });

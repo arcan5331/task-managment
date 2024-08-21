@@ -35,9 +35,12 @@ class TaskEvent implements ShouldBroadcast
         };
     }
 
-    public function broadcastOn(): PrivateChannel
+    public function broadcastOn()
     {
-        return new PrivateChannel('task.' . $this->taskId);
+        return [
+            new PrivateChannel('Admin'),
+            new PrivateChannel('user.' . $this->taskData['user_id'])
+        ];
     }
 }
 

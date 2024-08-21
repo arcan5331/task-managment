@@ -13,4 +13,9 @@ class TaskDeletedEvent extends BaseTaskEvent
             'task' => $this->taskData
         ];
     }
+
+    public function broadcastAs()
+    {
+        return 'task-deleted';
+    }
 }

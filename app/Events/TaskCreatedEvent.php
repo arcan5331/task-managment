@@ -13,4 +13,9 @@ class TaskCreatedEvent extends BaseTaskEvent
             'task' => $this->taskData
         ];
     }
+
+    public function broadcastAs()
+    {
+        return 'task-created';
+    }
 }
