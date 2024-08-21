@@ -4,11 +4,14 @@ namespace App\Models;
 
 use App\Casts\JalaliDateCast;
 use App\Enums\TaskStatus;
+use App\Observers\TaskObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\TaskSuperiority;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
+#[ObservedBy(TaskObserver::class)]
 class Task extends Model
 {
     protected $fillable = [
